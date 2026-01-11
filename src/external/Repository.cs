@@ -34,6 +34,7 @@ public class ProductRepository : IPortsBase<Product>
 
    public async Task Edit(string id, Product info)
    {
+      info.Id = id;
       await _collection.ReplaceOneAsync(i => i.Id == id, ProductDoc.ToDocument(info));
    }
 
@@ -72,6 +73,7 @@ public class CategoryRepository : IPortsBase<Category>
 
    public async Task Edit(string id, Category info)
    {
+      info.Id = id;
       await _collection.ReplaceOneAsync(i => i.Id == id, CategoryDoc.ToDocument(info));
    }
 
