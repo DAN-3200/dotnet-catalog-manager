@@ -21,11 +21,11 @@ public class ProductUseCase
 
       if (info.Category is not null)
       {
-         var category = await _categoryRepo.GetByName(info.Category!.Title!);
+         var category = await _categoryRepo.GetByName(info.Category.Title!);
 
          if (category is null)
          {
-            var newCategory = new Category(info.Category!.Title!, info.Category.Description);
+            var newCategory = new Category(info.Category.Title!, info.Category.Description);
             categoryId = await _categoryRepo.Save(newCategory);
          }
          else
@@ -124,6 +124,7 @@ public class CategoryUseCase
    public async Task EditCategory(string id, CategoryDto info)
    {
       var category = await _categoryRepo.GetById(id);
+
       if (category is null) throw new Exception("Não há Category com tal id");
 
       if (info.Title is not null)

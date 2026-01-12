@@ -30,6 +30,7 @@ public class ProductDoc
    public static Product ToEntity(ProductDoc doc)
    {
       return new Product(
+         doc.Id,
          doc.Title,
          doc.Description,
          doc.Price,
@@ -51,6 +52,7 @@ public class CategoryDoc
    {
       return new CategoryDoc
       {
+         Id = entity.Id!,
          Title = entity.Title,
          Description = entity.Description
       };
@@ -59,6 +61,7 @@ public class CategoryDoc
    public static Category ToEntity(CategoryDoc doc)
    {
       return new Category(
+         doc.Id,
          doc.Title,
          doc.Description
       );

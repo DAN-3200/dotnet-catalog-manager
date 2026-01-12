@@ -1,4 +1,5 @@
 using Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Persistence;
 using Ports;
@@ -16,20 +17,21 @@ public class ProductRepository : IPortsBase<Product>
 
    public async Task<string> Save(Product info)
    {
-      await _collection.InsertOneAsync(ProductDoc.ToDocument(info));
-      return info.Id!;
+      var document = ProductDoc.ToDocument(info);
+      await _collection.InsertOneAsync(document);
+      return document.Id!;
    }
 
-   public async Task<Product> GetById(string id)
+   public async Task<Product?> GetById(string id)
    {
       var res = await _collection.Find(i => i.Id == id).FirstOrDefaultAsync();
-      return ProductDoc.ToEntity(res);
+      return res is null ? null : ProductDoc.ToEntity(res);
    }
 
-   public async Task<Product> GetByName(string name)
+   public async Task<Product?> GetByName(string name)
    {
       var res = await _collection.Find(i => i.Title == name).FirstOrDefaultAsync();
-      return ProductDoc.ToEntity(res);
+      return res is null ? null : ProductDoc.ToEntity(res);
    }
 
    public async Task Edit(string id, Product info)
@@ -55,20 +57,21 @@ public class CategoryRepository : IPortsBase<Category>
 
    public async Task<string> Save(Category info)
    {
-      await _collection.InsertOneAsync(CategoryDoc.ToDocument(info));
-      return info.Id!;
+      var document = CategoryDoc.ToDocument(info);
+      await _collection.InsertOneAsync(document);
+      return document.Id;
    }
 
-   public async Task<Category> GetById(string id)
+   public async Task<Category?> GetById(string id)
    {
       var res = await _collection.Find(i => i.Id == id).FirstOrDefaultAsync();
-      return CategoryDoc.ToEntity(res);
+      return res is null ? null : CategoryDoc.ToEntity(res);
    }
 
-   public async Task<Category> GetByName(string name)
+   public async Task<Category?> GetByName(string name)
    {
       var res = await _collection.Find(i => i.Title == name).FirstOrDefaultAsync();
-      return CategoryDoc.ToEntity(res);
+      return res is null ? null : CategoryDoc.ToEntity(res);
    }
 
    public async Task Edit(string id, Category info)
