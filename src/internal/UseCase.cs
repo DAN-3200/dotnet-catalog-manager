@@ -109,8 +109,7 @@ public class CategoryUseCase
    public async Task SaveCategory(CategoryDto info)
    {
       var category = new Category(info.Title!, info.Description);
-
-      await _categoryRepo.Save(category!);
+      await _categoryRepo.Save(category);
    }
 
    public async Task<Category> GetCategory(string id)
