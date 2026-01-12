@@ -7,7 +7,7 @@ using usecase;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-   builder.Services.AddOpenApi();
+   builder.Services.AddSwaggerGen();
    builder.Services.AddMongo(builder.Configuration);
    builder.Services.AddControllers();
    builder.Services.AddScoped<ProductUseCase>();
@@ -21,7 +21,8 @@ var app = builder.Build();
 {
    if (app.Environment.IsDevelopment())
    {
-      app.MapOpenApi();
+      app.UseSwagger();
+      app.UseSwaggerUI();
    }
    app.MapControllers();
 }
