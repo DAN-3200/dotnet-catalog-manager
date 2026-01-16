@@ -4,8 +4,9 @@ using Infrastructure.DependencyInjection;
 using Ports;
 using Repository;
 using usecase;
-using Microsoft.AspNetCore.HttpLogging;
 using Infrastructure;
+using Serilog;
+using Microsoft.AspNetCore.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -16,28 +17,34 @@ var builder = WebApplication.CreateBuilder(args);
    builder.Services.AddScoped<IPortsBase<Product>, ProductRepository>();
    builder.Services.AddScoped<IPortsBase<Category>, CategoryRepository>();
 
-   builder.Logging.ClearProviders();
-   builder.Logging.AddConsole();
-   builder.Logging.SetMinimumLevel(LogLevel.Information);
-   builder.Services.AddHttpLogging(log =>
+   builder.Host.UseSerilog((ctx, services, config) =>
    {
-      log.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders | HttpLoggingFields.ResponsePropertiesAndHeaders;
-      log.RequestBodyLogLimit = 4090;
-      log.ResponseBodyLogLimit = 4090;
+      config
+         .ReadFrom.Configuration(ctx.Configuration)
+         .ReadFrom.Services(services)
+         .Enrich.FromLogContext()
+         .WriteTo.Console();
    });
    builder.Services.AddSwaggerGen();
+   builder.Services.AddRateLimiter(opt =>
+   {
+      opt.AddFixedWindowLimiter("fixed", o =>
+      {
+         o.Window = TimeSpan.FromSeconds(1);
+         o.PermitLimit = 100;
+      });
+   });
 }
 
 var app = builder.Build();
 {
-   app.UseHttpLogging();
-   app.UseGlobalErrorHandler();
-
    if (app.Environment.IsDevelopment())
    {
       app.UseSwagger();
       app.UseSwaggerUI();
    }
+   app.UseGlobalErrorHandler();
+   app.UseSerilogRequestLogging();
    app.MapControllers();
 }
 
