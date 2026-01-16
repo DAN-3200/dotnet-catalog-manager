@@ -5,6 +5,7 @@ using Ports;
 using Repository;
 using usecase;
 using Microsoft.AspNetCore.HttpLogging;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -30,6 +31,7 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 {
    app.UseHttpLogging();
+   app.UseGlobalErrorHandler();
 
    if (app.Environment.IsDevelopment())
    {
