@@ -58,33 +58,32 @@ public class ProductUseCase
 
       if (info.Title is not null)
       {
-         product.Title = info.Title;
+         product.setTitle(info.Title);
       }
 
       if (info.Description is not null)
       {
-         product.Description = info.Description;
+         product.setDescription(info.Description);
       }
 
       if (info.Price is not null)
       {
-         product.Price = (decimal)info.Price;
+         product.setPrice((decimal)info.Price);
       }
 
-      // *add associação com categoria
       if (info.Category is not null)
       {
          var category = await _categoryRepo.GetByName(info.Category.Title!);
          if (category is not null)
          {
-            product.CategoryId = category.Id;
+            product.setCategoryId(category.Id!);
          }
          else
          {
             var newCategoryId = await _categoryRepo.Save(
                new Category(info.Category.Title!, info.Category.Description)
             );
-            product.CategoryId = newCategoryId;
+            product.setCategoryId(newCategoryId);
          }
       }
 
@@ -128,12 +127,12 @@ public class CategoryUseCase
 
       if (info.Title is not null)
       {
-         category.Title = info.Title;
+         category.setTitle(info.Title);
       }
 
       if (info.Description is not null)
       {
-         category.Description = info.Description;
+         category.setDescription(info.Description);
       }
 
       await _categoryRepo.Edit(id, category);
