@@ -38,6 +38,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
+
+   app.Lifetime.ApplicationStarted.Register(() =>
+   {
+      foreach (var url in app.Urls)
+      {
+         Console.WriteLine($"Listening on: {url}/swagger/index.html");
+      }
+   });
+
    if (app.Environment.IsDevelopment())
    {
       app.UseSwagger();
@@ -49,3 +58,4 @@ var app = builder.Build();
 }
 
 app.Run();
+
