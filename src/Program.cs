@@ -7,9 +7,11 @@ using usecase;
 using Infrastructure;
 using Serilog;
 using Microsoft.AspNetCore.RateLimiting;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+   builder.Services.AddOpenApi();
    builder.Services.AddMongo(builder.Configuration);
    builder.Services.AddControllers();
    builder.Services.AddScoped<ProductUseCase>();
@@ -25,7 +27,6 @@ var builder = WebApplication.CreateBuilder(args);
          .Enrich.FromLogContext()
          .WriteTo.Console();
    });
-   builder.Services.AddSwaggerGen();
    builder.Services.AddRateLimiter(opt =>
    {
       opt.AddFixedWindowLimiter("fixed", o =>
@@ -43,14 +44,14 @@ var app = builder.Build();
    {
       foreach (var url in app.Urls)
       {
-         Console.WriteLine($"Listening on: {url}/swagger/index.html");
+         Console.WriteLine($"Listening on: {url}/scalar/v1");
       }
    });
 
    if (app.Environment.IsDevelopment())
    {
-      app.UseSwagger();
-      app.UseSwaggerUI();
+      app.MapOpenApi();
+      app.MapScalarApiReference();
    }
    app.UseGlobalErrorHandler();
    app.UseSerilogRequestLogging();
