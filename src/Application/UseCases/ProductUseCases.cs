@@ -4,17 +4,11 @@ using Ports;
 
 namespace usecase;
 
-public class ProductUseCase
+public class ProductUseCase(
+   IPortsGenericRepo<Product> _productRepo,
+   IPortsGenericRepo<Category> _categoryRepo
+)
 {
-   private readonly IPortsGenericRepo<Product> _productRepo;
-   private readonly IPortsGenericRepo<Category> _categoryRepo;
-
-   public ProductUseCase(IPortsGenericRepo<Product> productRepo, IPortsGenericRepo<Category> categoryRepo)
-   {
-      _productRepo = productRepo;
-      _categoryRepo = categoryRepo;
-   }
-
    public async Task SaveProduct(ProductDto info)
    {
       string? categoryId = null;

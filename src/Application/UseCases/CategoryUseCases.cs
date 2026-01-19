@@ -4,15 +4,8 @@ using Ports;
 
 namespace usecase;
 
-public class CategoryUseCase
+public class CategoryUseCase(IPortsGenericRepo<Category> _categoryRepo)
 {
-   private readonly IPortsGenericRepo<Category> _categoryRepo;
-
-   public CategoryUseCase(IPortsGenericRepo<Category> categoryRepo)
-   {
-      _categoryRepo = categoryRepo;
-   }
-
    public async Task SaveCategory(CategoryDto info)
    {
       var category = new Category(info.Title!, info.Description);
