@@ -1,4 +1,4 @@
-using Conn;
+using ConnDb;
 using Entities;
 using Infrastructure.DependencyInjection;
 using Ports;
@@ -16,8 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
    builder.Services.AddControllers();
    builder.Services.AddScoped<ProductUseCase>();
    builder.Services.AddScoped<CategoryUseCase>();
-   builder.Services.AddScoped<IPortsBase<Product>, ProductRepository>();
-   builder.Services.AddScoped<IPortsBase<Category>, CategoryRepository>();
+   builder.Services.AddScoped<IPortsGenericRepo<Product>, ProductRepository>();
+   builder.Services.AddScoped<IPortsGenericRepo<Category>, CategoryRepository>();
 
    builder.Host.UseSerilog((ctx, services, config) =>
    {

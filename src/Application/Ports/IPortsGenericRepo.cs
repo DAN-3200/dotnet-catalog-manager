@@ -1,6 +1,6 @@
 namespace Ports;
 
-public interface IPortsBase<T> where T : class
+public interface IPortsGenericRepo<T> where T : class
 {
    Task<string> Save(T info);
    Task<T?> GetById(string id);
