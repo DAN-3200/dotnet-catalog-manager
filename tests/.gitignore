@@ -1,0 +1,10 @@
+bin
+obj
+Properties
+.vscode
+.env
+.text
+.vscode
+.github
+.user
+.vs/
