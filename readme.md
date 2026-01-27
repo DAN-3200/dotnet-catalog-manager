@@ -91,7 +91,7 @@ dotnet run --project .
 
 ## Documentação
 
-Link para documentação feita em Scalar [http://localhost:5015/scalar/v1]
+Documentação disponível a partir do Scalar UI [http://localhost:5015/scalar/v1](http://localhost:5015/scalar/v1)
 
 ## Licença
 
