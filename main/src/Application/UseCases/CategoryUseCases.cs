@@ -1,20 +1,20 @@
-using Dtos;
-using Entities;
-using Ports;
+using ProductCatalog.Application.Dtos;
+using ProductCatalog.Application.Ports;
+using ProductCatalog.Domain.Entities;
 
-namespace usecase;
+namespace ProductCatalog.Application.UseCases;
 
-public class CategoryUseCase(IPortsGenericRepo<Category> _categoryRepo)
+public class CategoryUseCase(IPortsGenericRepo<Category> categoryRepo)
 {
    public async Task SaveCategory(CategoryDto info)
    {
       var category = new Category(info.Title!, info.Description);
-      await _categoryRepo.Save(category);
+      await categoryRepo.Save(category);
    }
 
    public async Task<Category> GetCategory(string id)
    {
-      var category = await _categoryRepo.GetById(id);
+      var category = await categoryRepo.GetById(id);
       if (category is null) throw new Exception("Não há Category com tal id");
 
       return category;
@@ -22,26 +22,26 @@ public class CategoryUseCase(IPortsGenericRepo<Category> _categoryRepo)
 
    public async Task EditCategory(string id, CategoryDto info)
    {
-      var category = await _categoryRepo.GetById(id);
+      var category = await categoryRepo.GetById(id);
 
       if (category is null) throw new Exception("Não há Category com tal id");
 
       if (info.Title is not null)
       {
-         category.setTitle(info.Title);
+         category.SetTitle(info.Title);
       }
 
       if (info.Description is not null)
       {
-         category.setDescription(info.Description);
+         category.SetDescription(info.Description);
       }
 
-      await _categoryRepo.Edit(id, category);
+      await categoryRepo.Edit(id, category);
    }
 
    public async Task DeleteCategory(string id)
    {
-      await _categoryRepo.DeleteById(id);
+      await categoryRepo.DeleteById(id);
    }
 }
 

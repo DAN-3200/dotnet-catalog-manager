@@ -1,4 +1,4 @@
-namespace Ports;
+namespace ProductCatalog.Application.Ports;
 
 public interface IPortsGenericRepo<T> where T : class
 {

@@ -1,37 +1,37 @@
-using Dtos;
 using Microsoft.AspNetCore.Mvc;
-using usecase;
+using ProductCatalog.Application.Dtos;
+using ProductCatalog.Application.UseCases;
 
-namespace Api.Controllers;
+namespace ProductCatalog.Infrastructure.Http.Controllers;
 
 [ApiController]
-public class CategoryControllers(CategoryUseCase _useCase) : ControllerBase
+public class CategoryControllers(CategoryUseCase useCase) : ControllerBase
 {
    [HttpPost("category/save")]
    public async Task<IActionResult> SaveCategory([FromBody] CategoryDto info)
    {
-      await _useCase.SaveCategory(info);
+      await useCase.SaveCategory(info);
       return Created();
    }
 
    [HttpGet("category/get/{id}")]
    public async Task<IActionResult> GetCategory(string id)
    {
-      var response = await _useCase.GetCategory(id);
+      var response = await useCase.GetCategory(id);
       return Ok(response);
    }
 
    [HttpPatch("category/edit/{id}")]
    public async Task<IActionResult> EditCategory(string id, [FromBody] CategoryDto info)
    {
-      await _useCase.EditCategory(id, info);
+      await useCase.EditCategory(id, info);
       return NoContent();
    }
 
    [HttpDelete("category/delete/{id}")]
    public async Task<IActionResult> DeleteCategory(string id)
    {
-      await _useCase.DeleteCategory(id);
+      await useCase.DeleteCategory(id);
       return NoContent();
    }
 }

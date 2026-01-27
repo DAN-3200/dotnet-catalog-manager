@@ -1,4 +1,4 @@
-namespace Dtos;
+namespace ProductCatalog.Application.Dtos;
 
 public record ProductDto
 {

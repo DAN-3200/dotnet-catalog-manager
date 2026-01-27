@@ -1,19 +1,13 @@
-using Entities;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using Persistence;
-using Ports;
+using ProductCatalog.Application.Ports;
+using ProductCatalog.Domain.Entities;
+using ProductCatalog.Infrastructure.Persistence.MongoDb.Documents;
 
-namespace Repository;
+namespace ProductCatalog.Infrastructure.Persistence.MongoDb.Repository;
 
-public class ProductRepository : IPortsGenericRepo<Product>
+public class ProductRepository(IMongoDatabase database) : IPortsGenericRepo<Product>
 {
-   private readonly IMongoCollection<ProductDoc> _collection;
-
-   public ProductRepository(IMongoDatabase database)
-   {
-      _collection = database.GetCollection<ProductDoc>("Product");
-   }
+   private readonly IMongoCollection<ProductDoc> _collection = database.GetCollection<ProductDoc>("Product");
 
    public async Task<string> Save(Product info)
    {

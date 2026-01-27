@@ -1,8 +1,7 @@
-using ConnDb;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace Infrastructure.DependencyInjection;
+namespace ProductCatalog.Infrastructure.Persistence.MongoDb;
 
 public static class MongoExtension
 {

@@ -1,4 +1,4 @@
-namespace Entities;
+namespace ProductCatalog.Domain.Entities;
 
 public class Product
 {
@@ -23,19 +23,19 @@ public class Product
    {
    }
 
-   public void setTitle(string title)
+   public void SetTitle(string title)
    {
       this.Title = NormalizeTitle(title);
    }
-   public void setDescription(string description)
+   public void SetDescription(string description)
    {
       this.Description = NormalizeDescription(description);
    }
-   public void setPrice(decimal price)
+   public void SetPrice(decimal price)
    {
       this.Price = NormalizePrice(price);
    }
-   public void setCategoryId(string id)
+   public void SetCategoryId(string id)
    {
       this.CategoryId = NormalizeCategoryId(id);
    }

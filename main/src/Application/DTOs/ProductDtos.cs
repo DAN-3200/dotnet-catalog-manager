@@ -1,4 +1,5 @@
-namespace Dtos;
+namespace ProductCatalog.Application.Dtos;
+
 public record CategoryDto
 {
    public string? Title { get; set; }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace Infrastructure;
+namespace ProductCatalog.Infrastructure.Middlewares;
 
 public static class ErrorHandlingExtensions
 {

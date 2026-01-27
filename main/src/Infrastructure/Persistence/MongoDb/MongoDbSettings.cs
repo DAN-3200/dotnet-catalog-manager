@@ -1,4 +1,4 @@
-namespace ConnDb;
+namespace ProductCatalog.Infrastructure.Persistence.MongoDb;
 
 public class MongoDbSettings
 {

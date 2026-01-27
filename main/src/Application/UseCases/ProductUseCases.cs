@@ -1,12 +1,12 @@
-using Dtos;
-using Entities;
-using Ports;
+using ProductCatalog.Application.Dtos;
+using ProductCatalog.Application.Ports;
+using ProductCatalog.Domain.Entities;
 
-namespace usecase;
+namespace ProductCatalog.Application.UseCases;
 
 public class ProductUseCase(
-   IPortsGenericRepo<Product> _productRepo,
-   IPortsGenericRepo<Category> _categoryRepo
+   IPortsGenericRepo<Product> productRepo,
+   IPortsGenericRepo<Category> categoryRepo
 )
 {
    public async Task SaveProduct(ProductDto info)
@@ -15,12 +15,12 @@ public class ProductUseCase(
 
       if (info.Category is not null)
       {
-         var category = await _categoryRepo.GetByName(info.Category.Title!);
+         var category = await categoryRepo.GetByName(info.Category.Title!);
 
          if (category is null)
          {
             var newCategory = new Category(info.Category.Title!, info.Category.Description);
-            categoryId = await _categoryRepo.Save(newCategory);
+            categoryId = await categoryRepo.Save(newCategory);
          }
          else
          {
@@ -35,58 +35,58 @@ public class ProductUseCase(
          categoryId
       );
 
-      await _productRepo.Save(product);
+      await productRepo.Save(product);
    }
 
    public async Task<Product> GetProduct(string id)
    {
-      var product = await _productRepo.GetById(id);
+      var product = await productRepo.GetById(id);
       if (product is null) throw new Exception("Não há product com tal id");
       return product;
    }
 
    public async Task EditProduct(string id, ProductDto info)
    {
-      var product = await _productRepo.GetById(id);
+      var product = await productRepo.GetById(id);
       if (product is null) throw new Exception("Não há Product com tal id");
 
       if (info.Title is not null)
       {
-         product.setTitle(info.Title);
+         product.SetTitle(info.Title);
       }
 
       if (info.Description is not null)
       {
-         product.setDescription(info.Description);
+         product.SetDescription(info.Description);
       }
 
       if (info.Price is not null)
       {
-         product.setPrice((decimal)info.Price);
+         product.SetPrice((decimal)info.Price);
       }
 
       if (info.Category is not null)
       {
-         var category = await _categoryRepo.GetByName(info.Category.Title!);
+         var category = await categoryRepo.GetByName(info.Category.Title!);
          if (category is not null)
          {
-            product.setCategoryId(category.Id!);
+            product.SetCategoryId(category.Id!);
          }
          else
          {
-            var newCategoryId = await _categoryRepo.Save(
+            var newCategoryId = await categoryRepo.Save(
                new Category(info.Category.Title!, info.Category.Description)
             );
-            product.setCategoryId(newCategoryId);
+            product.SetCategoryId(newCategoryId);
          }
       }
 
-      await _productRepo.Edit(id, product);
+      await productRepo.Edit(id, product);
    }
 
    public async Task DeleteProduct(string id)
    {
-      await _productRepo.DeleteById(id);
+      await productRepo.DeleteById(id);
    }
 }
 

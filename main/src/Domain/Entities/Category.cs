@@ -1,4 +1,4 @@
-namespace Entities;
+namespace ProductCatalog.Domain.Entities;
 
 public class Category
 {
@@ -19,11 +19,11 @@ public class Category
    {
    }
 
-   public void setTitle(string title)
+   public void SetTitle(string title)
    {
       this.Title = NormalizeTitle(title);
    }
-   public void setDescription(string description)
+   public void SetDescription(string description)
    {
       this.Description = NormalizeDescription(description);
    }

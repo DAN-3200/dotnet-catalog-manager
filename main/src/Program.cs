@@ -1,12 +1,11 @@
-using ConnDb;
-using Entities;
-using Infrastructure.DependencyInjection;
-using Ports;
-using Repository;
-using usecase;
-using Infrastructure;
-using Serilog;
+using ProductCatalog.Application.UseCases;
+using ProductCatalog.Domain.Entities;
+using ProductCatalog.Infrastructure.Middlewares;
+using ProductCatalog.Infrastructure.Persistence.MongoDb;
+using ProductCatalog.Infrastructure.Persistence.MongoDb.Repository;
+using ProductCatalog.Application.Ports;
 using Microsoft.AspNetCore.RateLimiting;
+using Serilog;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using Entities;
+using ProductCatalog.Domain.Entities;
 
-namespace Persistence;
+namespace ProductCatalog.Infrastructure.Persistence.MongoDb.Documents;
 
 public class ProductDoc
 {

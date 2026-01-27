@@ -1,19 +1,13 @@
-using Entities;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using Persistence;
-using Ports;
+using ProductCatalog.Application.Ports;
+using ProductCatalog.Domain.Entities;
+using ProductCatalog.Infrastructure.Persistence.MongoDb.Documents;
 
-namespace Repository;
+namespace ProductCatalog.Infrastructure.Persistence.MongoDb.Repository;
 
-public class CategoryRepository : IPortsGenericRepo<Category>
+public class CategoryRepository(IMongoDatabase database) : IPortsGenericRepo<Category>
 {
-   private readonly IMongoCollection<CategoryDoc> _collection;
-
-   public CategoryRepository(IMongoDatabase database)
-   {
-      _collection = database.GetCollection<CategoryDoc>("Category");
-   }
+   private readonly IMongoCollection<CategoryDoc> _collection = database.GetCollection<CategoryDoc>("Category");
 
    public async Task<string> Save(Category info)
    {
